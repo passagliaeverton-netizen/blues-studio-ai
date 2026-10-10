@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17110d">
+<meta name="description" content="Seu estúdio pessoal para escrever letras de blues e preparar prompts musicais.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/blues-192.svg" type="image/svg+xml">
+<title>Blues Studio AI</title>
+<style>
+:root{color-scheme:dark;--bg:#120e0b;--p:#241a13;--line:#4a3728;--t:#f4e9dc;--m:#b5a291;--a:#e5a85b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#392315,transparent 45%),var(--bg);color:var(--t);font:16px/1.5 system-ui,sans-serif}
+header,main,footer{max-width:760px;margin:auto;padding:16px}header{display:flex;gap:12px;align-items:center;padding-top:26px}
+.logo{display:grid;place-items:center;width:54px;height:54px;border:1px solid #79512f;border-radius:16px;color:#f3c985;font-size:30px;flex-shrink:0}
+h1{font-size:clamp(1.5rem,6vw,2rem);line-height:1.15;margin:0}h1 span,.eyebrow{color:var(--a)}.sub,.muted,.hint{color:var(--m)}.sub{margin:5px 0 0;font-size:.9rem}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.14em;margin:0 0 5px}.panel{border:1px solid var(--line);border-radius:18px;background:var(--p);padding:17px;margin-bottom:14px}
+h2{font-size:1.2rem;margin:0 0 14px}label{display:block;font-size:.88rem;font-weight:650;margin:13px 0 6px}
+input,textarea,select{width:100%;padding:12px;background:#140f0c;color:var(--t);border:1px solid #5b4432;border-radius:10px;font:inherit;min-height:45px}
+textarea{resize:vertical;line-height:1.5}button,.link{background:#49301d;color:#fff1df;border:1px solid #79512f;border-radius:10px;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;min-height:43px}
+.primary{background:var(--a);color:#24160c;border-color:var(--a)}.quiet{background:transparent;color:#f3c985}.wide{width:100%;margin-top:16px}
+.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px}.muted,.hint{font-size:.82rem}.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.item{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #473629;border-radius:10px;padding:11px;margin-top:8px;background:#17110d}
+.item strong{overflow-wrap:anywhere}.item small{display:block;color:var(--m)}.item button{padding:7px;font-size:.8rem}
+footer{font-size:.75rem;color:#8f7d6c}#toast{position:fixed;bottom:16px;left:50%;transform:translate(-50%,20px);opacity:0;background:#f3c985;color:#24160c;padding:11px 15px;border-radius:10px;max-width:90%;transition:.2s;pointer-events:none;z-index:5}
+#toast.show{opacity:1;transform:translate(-50%,0)}[hidden]{display:none!important}.statusbar{font-size:.78rem;color:var(--m);padding:0 16px 4px;max-width:760px;margin:auto}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#8ac58a;margin-right:6px}.dot.off{background:#e5a85b}
+@media(max-width:520px){.grid{grid-template-columns:1fr}header,main,footer{padding-left:13px;padding-right:13px}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="logo">♫</div><div><p class="eyebrow">SEU ESTÚDIO PARTICULAR</p><h1>Blues Studio <span>AI</span></h1><p class="sub">Suas letras. Seu blues. Sua história.</p></div></header>
+<div class="statusbar"><span id="netdot" class="dot"></span><span id="netstatus">Verificando conexão…</span> · <span id="savestatus">Salvamento local disponível</span></div>
+<main>
+<section class="panel"><p class="eyebrow">01 / COMPOSIÇÃO</p><h2>Sua letra</h2>
+<label for="title">Nome da música</label><input id="title" placeholder="Ex.: Cinzas e Saudade" maxlength="100">
+<label for="lyrics">Sua letra original</label><textarea id="lyrics" rows="8" placeholder="Cole ou escreva sua letra aqui...&#10;&#10;[Verso 1]&#10;...&#10;&#10;[Refrão]&#10;..."></textarea>
+<div class="actions"><button id="save">Salvar projeto</button><button id="new" class="quiet">+ Novo</button><span id="status" class="muted">Rascunho novo</span></div>
+<p class="hint">As letras e projetos ficam neste navegador/aparelho. Use Backup regularmente para ter uma cópia fora dele.</p>
+</section>
+<section class="panel"><p class="eyebrow">02 / DIREÇÃO MUSICAL</p><h2>Desenhe o seu som</h2>
+<div class="grid"><div><label for="style">Estilo de blues</label><select id="style"><option>Slow blues melancólico</option><option>Chicago electric blues</option><option>Delta blues acústico</option><option>Blues rock</option><option>Texas blues</option><option>Jazz blues noturno</option></select></div>
+<div><label for="tempo">Andamento</label><select id="tempo"><option>Lento e arrastado</option><option>Moderado, com balanço</option><option>Rápido e energético</option></select></div>
+<div><label for="mood">Atmosfera</label><select id="mood"><option>Sombria, íntima e melancólica</option><option>Crua, poeirenta e tradicional</option><option>Quente, noturna e emocional</option><option>Esperançosa, com superação</option><option>Intensa e dramática</option></select></div>
+<div><label for="voice">Voz cantada</label><select id="voice"><option>Voz masculina grave, rouca e expressiva</option><option>Voz masculina suave e intimista</option><option>Voz feminina grave e soulful</option><option>Voz feminina poderosa e rouca</option><option>Voz natural e emotiva</option></select></div></div>
+<label for="instruments">Instrumentos (opcional)</label><input id="instruments" placeholder="Ex.: guitarra slide, piano discreto, harmônica">
+<label for="notes">Observações para a IA (opcional)</label><textarea id="notes" rows="3" placeholder="Ex.: respeitar a letra exatamente...">
+</textarea><button id="prepare" class="primary wide">Preparar prompt musical</button>
+<p class="hint">Preparar a letra funciona offline. Para gerar áudio, conecte-se à internet e abra um serviço musical, como o Suno.</p>
+</section>
+<section class="panel" id="outPanel" hidden><div class="actions" style="justify-content:space-between"><h2>Prompt musical</h2><button id="copy" class="quiet">Copiar</button></div>
+<textarea id="output" rows="12" readonly></textarea><div class="actions"><button id="download">Baixar prompt .txt</button><a class="link" href="https://suno.com/create" target="_blank" rel="noopener">Abrir gerador musical ↗</a></div>
+<p class="hint">No gerador musical, use sua letra no campo de letra e as instruções de estilo no campo de estilo. A geração de áudio exige internet.</p>
+</section>
+<section class="panel"><div class="actions" style="justify-content:space-between"><div><p class="eyebrow">03 / ARQUIVO PESSOAL</p><h2>Meus projetos</h2></div><button id="backup" class="quiet">Backup</button></div>
+<p class="muted">Projetos guardados neste navegador. O backup JSON permite restaurá-los depois.</p><div id="projects"></div>
+<label for="restore">Restaurar backup JSON</label><input id="restore" type="file" accept=".json,application/json">
+</section>
+<section class="panel"><p class="eyebrow">04 / USO NO CELULAR</p><h2>Instalar na tela inicial</h2><p class="muted">Depois que esta versão estiver publicada em um endereço HTTPS, abra-a no Chrome e escolha o menu ⋮ → “Instalar app” ou “Adicionar à tela inicial”. A instalação permite abrir o app e usar os recursos principais offline. Este ZIP, sozinho, não instala o app no celular.</p></section>
+</main><footer>Blues Studio AI · versão 0.3 offline · suas composições em primeiro lugar</footer><div id="toast" role="status"></div>
+<script>
+(()=> {
+const $=id=>document.getElementById(id), key='bluesStudioAI.simple.v1', draftKey='bluesStudioAI.draft.v3';
+let current=null, toastTimer, draftTimer;
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2500)}
+function list(){try{const a=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
+function persist(a){localStorage.setItem(key,JSON.stringify(a))}
+function read(){return{id:current||('p'+Date.now()+Math.random().toString(16).slice(2)),title:$('title').value.trim()||'Projeto de blues sem título',lyrics:$('lyrics').value,style:$('style').value,tempo:$('tempo').value,mood:$('mood').value,voice:$('voice').value,instruments:$('instruments').value.trim(),notes:$('notes').value.trim(),updatedAt:new Date().toISOString()}}
+function fields(){return ['title','lyrics','style','tempo','mood','voice','instruments','notes']}
+function storeDraft(){try{localStorage.setItem(draftKey,JSON.stringify(read()));$('savestatus').textContent='Rascunho guardado neste aparelho'}catch(e){$('savestatus').textContent='Não foi possível guardar automaticamente'}}
+function queueDraft(){clearTimeout(draftTimer);draftTimer=setTimeout(storeDraft,350)}
+function fill(p){current=p.id;$('title').value=p.title||'';$('lyrics').value=p.lyrics||'';['style','tempo','mood','voice','instruments','notes'].forEach(k=>{if(p[k])$(k).value=p[k]});$('status').textContent='Projeto carregado';storeDraft();window.scrollTo({top:0,behavior:'smooth'})}
+function render(){const el=$('projects');el.replaceChildren();const a=list().sort((x,y)=>(y.updatedAt||'').localeCompare(x.updatedAt||''));if(!a.length){const p=document.createElement('p');p.className='muted';p.textContent='Seus projetos salvos aparecerão aqui.';el.append(p);return}a.forEach(p=>{const d=document.createElement('div');d.className='item';const info=document.createElement('div'),b=document.createElement('strong'),s=document.createElement('small');b.textContent=p.title;s.textContent=(p.style||'Blues')+' · '+new Date(p.updatedAt||Date.now()).toLocaleDateString('pt-BR');info.append(b,s);const acts=document.createElement('div'),o=document.createElement('button'),x=document.createElement('button');o.textContent='Abrir';o.onclick=()=>fill(p);x.textContent='Excluir';x.className='quiet';x.onclick=()=>{if(confirm('Excluir este projeto?')){persist(list().filter(q=>q.id!==p.id));render();toast('Projeto excluído.')}};acts.append(o,x);d.append(info,acts);el.append(d)})}
+$('save').onclick=()=>{const p=read();if(!p.lyrics.trim()){toast('Escreva sua letra antes de salvar.');return}const a=list(),i=a.findIndex(q=>q.id===p.id);if(i>=0)a[i]=p;else a.unshift(p);try{persist(a);current=p.id;storeDraft();$('status').textContent='Salvo neste aparelho';render();toast('Projeto salvo neste aparelho.')}catch(e){toast('Não foi possível salvar. Exporte um backup.')}};
+$('new').onclick=()=>{current=null;fields().forEach(k=>{if(['style','tempo','mood','voice'].includes(k))$(k).selectedIndex=0;else $(k).value=''});$('status').textContent='Novo projeto';$('outPanel').hidden=true;storeDraft();window.scrollTo({top:0,behavior:'smooth'})};
+$('prepare').onclick=()=>{const p=read();if(!p.lyrics.trim()){toast('Primeiro escreva ou cole sua letra.');return}const ins=p.instruments?'Instrumentos desejados: '+p.instruments+'.':'Use guitarra blues expressiva, baixo redondo, bateria orgânica e, se combinar, piano ou harmônica.';$('output').value=`Crie uma música ORIGINAL de ${p.style}, com andamento ${p.tempo}.\nAtmosfera: ${p.mood}.\nVocal: ${p.voice}.\n${ins}\nProdução autêntica de blues, dinâmica natural e interpretação emotiva. Preserve a letra e as marcações de verso e refrão.\n${p.notes?'Instruções adicionais: '+p.notes:''}\n\nTÍTULO: ${p.title}\n\nLETRA ORIGINAL:\n${p.lyrics}`;$('outPanel').hidden=false;$('outPanel').scrollIntoView({behavior:'smooth'});};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('output').value);toast('Prompt copiado.')}catch(e){$('output').focus();$('output').select();toast('Selecione o texto e copie manualmente.')}};
+function download(n,t,type){const u=URL.createObjectURL(new Blob([t],{type})),a=document.createElement('a');a.href=u;a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+$('download').onclick=()=>download('prompt-blues.txt',$('output').value,'text/plain;charset=utf-8');
+$('backup').onclick=()=>{download('blues-studio-ai-backup.json',JSON.stringify({app:'Blues Studio AI',version:3,projects:list(),draft:(()=>{try{return JSON.parse(localStorage.getItem(draftKey)||'null')}catch(e){return null}})()},null,2),'application/json');toast('Backup preparado.')};
+$('restore').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result),incoming=Array.isArray(j)?j:j.projects;if(!Array.isArray(incoming))throw Error();const all=[...incoming,...list()],unique=[...new Map(all.filter(p=>p&&p.id).map(p=>[p.id,p])).values()];persist(unique);if(j.draft)localStorage.setItem(draftKey,JSON.stringify(j.draft));render();toast('Backup restaurado.')}catch(err){toast('Esse arquivo não parece ser um backup válido.')}e.target.value=''};r.readAsText(f)};
+fields().forEach(k=>$(k).addEventListener('input',queueDraft));
+try{const draft=JSON.parse(localStorage.getItem(draftKey)||'null');if(draft){fill(draft);$('status').textContent='Rascunho recuperado automaticamente'}else if(location.protocol==='file:')$('savestatus').textContent='Modo arquivo local: faça backups frequentes'} }catch(e){}
+function network(){const online=navigator.onLine;$('netdot').classList.toggle('off',!online);$('netstatus').textContent=online?'Conectado à internet':'Sem internet — modo de escrita disponível'}
+window.addEventListener('online',network);window.addEventListener('offline',network);network();
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+render();
+})();
+</script>
+</body></html>
